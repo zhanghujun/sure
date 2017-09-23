@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        div{
+            width: 500px;
+            height: 500px;
+            margin:auto;
+        }
+    </style>
+</head>
+<body>
+<div>
+    <canvas width="500px" height="500px" ></canvas>
+</div>
+</body>
+<script>
+    var can=document.querySelector("canvas");
+    var hua=can.getContext("2d");
+    function clock(){
+        hua.clearRect(0,0,can.width,can.height);
+        var img=new Image();
+        img.src="19.jpg"
+        var s=new Date();
+        var shi= s.getHours();
+        var fen= s.getMinutes();
+        var miao= s.getSeconds();
+         if(shi>12){
+             shi=shi-12;
+         };
+        shi+=fen/60;
+        //画园
+        hua.beginPath();
+        hua.drawImage(img,0,0,can.width,can.height)
+        hua.arc(250,250,200,0,2*Math.PI,false);
+        hua.strokeStyle="black";
+        hua.stroke();
+        hua.clip();
+        hua.closePath();
+        //画时刻
+        for(var i=0;i<12;i++){
+            hua.save()
+            hua.translate(250,250);
+            hua.rotate(Math.PI/180*30*i);
+            hua.beginPath();
+            hua.moveTo(0,-200);
+            hua.lineTo(0,-180);
+            hua.strokeStyle="black";
+            hua.lineWidth=5;
+            hua.stroke();
+            hua.closePath();
+            hua.restore();
+        };
+        //画分钟
+        for(var i=0;i<60;i++){
+            hua.save()
+            hua.translate(250,250);
+            hua.rotate(Math.PI/180*6*i);
+            hua.beginPath();
+            hua.moveTo(0,-200);
+            hua.lineTo(0,-195);hua.strokeStyle="black";
+            hua.stroke();
+            hua.closePath();
+            hua.restore();
+        };
+        //画时针
+        hua.save();
+        hua.translate(250,250);
+        hua.beginPath();
+        hua.rotate(Math.PI/180*shi*30);
+        hua.moveTo(0,20);
+        hua.lineTo(0,-80);
+        hua.strokeStyle="black";
+        hua.lineWidth=8;
+        hua.stroke();
+        hua.closePath();
+        hua.restore();
+        //画分针
+        hua.save();
+        hua.translate(250,250);
+        hua.beginPath();
+        hua.rotate(Math.PI/180*fen*6);
+        hua.moveTo(0,20);
+        hua.lineTo(0,-120);
+        hua.strokeStyle="black";;
+        hua.lineWidth=5;
+        hua.stroke();
+        hua.closePath();
+        hua.restore();
+        //画秒针
+        hua.save();
+        hua.translate(250,250);
+        hua.beginPath();
+        hua.rotate(Math.PI/180*miao*6);
+        hua.moveTo(0,20);
+        hua.lineTo(0,-155);
+        hua.strokeStyle="black";
+        hua.lineWidth=3;
+        hua.stroke();
+        hua.closePath();
+        //小园
+        hua.beginPath();
+        hua.arc(0,-135,5,0,Math.PI*2,false);
+        hua.fillStyle="black";
+        hua.fill();
+        hua.strokeStyle="black"
+        hua.lineWidth=1;
+        hua.stroke();
+        hua.closePath();
+        hua.restore();
+        //大圆
+        hua.save();
+        hua.translate(250,250);
+        hua.beginPath();
+        hua.arc(0,0,10,0,Math.PI*2,false);
+        hua.fillStyle="black";
+        hua.fill();
+        hua.strokeStyle="black"
+        hua.lineWidth=1;
+        hua.stroke();
+        hua.closePath();
+        hua.restore();
+    };
+    clock();
+    setInterval(clock,1000);
+</script>
+</html>
